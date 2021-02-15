@@ -1,0 +1,88 @@
+\section{Linear Regression}
+\begin{itemize}
+	\item Optimal solution for regression $\arg\min_f\E(Y \text{-} f(X))^2$ given by $f^*(x) \text{=} \E(Y | X\text{=}x)$ \
+	\item \textbf{Statistical learning theory: } \\ Directly minimize empirical risk $\arg\min_f\sum_{i \text{=} 1}^n (y_i \text{-} f(x_i))^2$
+\end{itemize}
+\subsection*{(1) Ordinary least squares}
+$
+	Y \text{=} \beta_0 \text{+} \sum_{j \text{=} 1}^d X_j\beta_j \text{=} X^T\beta$, \text{$\beta_0$\text{=}bias, $X,\beta \in \mathbb R^{d\text{+}1}$.}
+
+
+\begin{itemize}
+	\item Minimization through gradient descent or closed form 
+\end{itemize}
+\subsubsection{Closed Form}
+$
+	RSS(\beta) \text{=} \sum_{i \text{=} 1}^n (y_i \text{-} x_i^T\beta) \text{=}
+$ 
+$
+	(\mathbf y \text{-} \mathbf X\beta)^T(\mathbf y \text{-} \mathbf X\beta), 
+\hat\beta \text{=} (\mathbf{X^TX})^{\text{-}1}\mathbf X^T\mathbf y$
+
+
+\subsubsection{Prediction}
+$
+	\hat{\mathbf y} \text{=} \mathbf X \hat\beta \text{=} \mathbf X(\mathbf X^T\mathbf X)^{\text{-}1}\mathbf X^T \mathbf y, 
+$
+
+
+
+
+
+\subsection*{(2) Ridge regression: }
+$	\min \transp{(y\text{-} \X\beta)}(y\text{-}\X\beta)$  \textit{ s.t. } $\sumj d \beta_j^2 \leq t 
+$
+
+
+$ \Rightarrow (\y \text{-} \X\beta)^\top(\y \text{-} \X\beta) \text{+} \lambda\norm{\beta}^2$
+
+$
+	\X\hat\beta^{\text{ridge}} 
+	\text{=} \sumi d \mathbf u_j  \frac{d_{j}^2}{d_{j}^2 \text{+} \lambda} \mathbf u_{j}^T\mathbf y 
+$
+
+
+\begin{itemize}
+	\item $\frac{d_j^2}{d_j^2 \text{+} \lambda}$ small for small SV.
+	\item  $d_j\to 1$ for large SV. 
+	\item Suppresses contributions of small Evals (remove multicoli. blowing up variance).
+\end{itemize}
+
+
+\subsection*{(3) LASSO}
+$	\hat\beta^{\text{LASSO}} \text{=} \argmin_\beta (\y \text{-} \X\beta)^\top(\y\text{-}\X\beta)$ $
+	\text{subject to} \sumj d|\beta_j| \leq s.
+$
+
+Rewrite as
+$ (\y \text{-} \X\beta)^\top(\y \text{-} \X\beta) \text{+} \lambda|\beta_j|$
+
+
+%\begin{center}
+%	\includegraphics[width\text{=}0.8\columnwidth]{images/4\text{-}ridge\text{-}vs\text{-}lasso}\\
+%	\textit{Contours of error and constraint functions. Blue \text{=} constraint regions, red\text{=}contours of least squares error function.}
+%\end{center}
+\begin{itemize}
+	\item Large $\lambda$ will set some coefficients equal to $0$ $\to$ sparse solution (model selection)
+\end{itemize}
+
+\subsection*{(4) Bayesian Linear Regression} 
+Define prior distribution over $\beta$
+
+$
+	p(\beta|\Lambda) \text{=} \mathcal N(\beta|\mathbf 0, \Lambda^{\text{-}1})\propto e^{\text{-}\frac{1}{2} \beta^T\Lambda\beta},
+$
+
+$\Lambda \text{=} \inv \Sigma$ precision mat.
+Favors $\beta$=$0$. 
+
+\textbf{Posterior:} Given observed $\X, \y$
+$p(\beta| \X, \y, \Lambda) \text{=} \mathcal{N} (\beta|\mu_\beta, \Sigma_{\beta})$ 
+							$\mu_\beta	\text{=} (\X^T \X \text{+} \sigma^2\Lambda)^{\text{-}1}\X^T \y $ 
+							$\Sigma_\beta \text{=} \sigma^2(\X^T \X \text{+} \sigma^2\Lambda)^{\text{-}1} $
+
+Bayesian lr with gaussian prior \text{=} ridge for $\Lambda \text{=}\lambda \mathbb I_d, \sigma\text{=}1$
+
+
+
+

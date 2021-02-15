@@ -1,0 +1,27 @@
+\section{Deep Learning}
+\subsection{Activation Functions}
+\textit{Make NN function non\text{-}linear.}
+
+\textbf{ReLu}: 
+$
+	f(x) \text{=} \begin{cases}
+		0 &\textit{for }x<0 \\
+		x &\textit{for } x\geq 0
+	\end{cases}
+$
+\textbf{Sigmoid}: 
+$
+	\sigma(x) \text{=} \frac{1}{1 \text{+} \exp(\text{-}x)}
+$
+
+	\textbf{Tanh}: 
+$
+	\tanh(x) \text{=} \frac{2}{1 \text{+} e^{\text{-}2x}}\text{-}1
+$
+
+\subsection{Training Neural Networks}
+$	\min_\theta \sumin \L(y_i, \NN_\theta(x_i))
+$
+
+\subsection{Regularization}
+Early stop., Dropout, bay. priors, L2

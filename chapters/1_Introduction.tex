@@ -1,0 +1,154 @@
+% =================================== Probabilities ====================================
+
+\section*{Probabilities}
+\subsection*{Expectation / Var / Covar}
+$\mathbb{E}[X]\text{=}\int_{\Omega}xf(x)d x\text{=}\int_{\omega}x\mathbb{P}[X{\text{=}}x]d x$
+$\mathbb{E}_{Y|X}[Y]\text{=}\mathbb{E}_{Y}[Y|X]$\\
+$\mathbb{E}_{X,Y}[f(X,Y)]\text{=}\mathbb{E}_{X}\mathbb{E}_{Y|X}[f(X,Y)|X]$
+%$\mathbb{E}_{Y|X}[f(X,Y)|X]{\text{=}}\int_\mathbb{R}f(X,y)\mathbb{P}(y|X)d y$
+
+$\mathbb{V}(X)\text{\text{=}}\mathbb{E}[(X{\text{\text{-}}}\mathbb{E}[X])^2]\text{\text{=}}\mathbb{E}[X^2]\text{\text{-}}\mathbb{E}[X]^2$\\
+%$\mathbb{V}[X\text{+}Y]{\text{=}}\mathrm{Var}[X]\text{+}\mathrm{Var}[Y]X,Y \,\text{iid}$\\
+%$\mathbb{V}[\alpha X]\text{=}\alpha^2\mathrm{Var}[X]$
+
+$\mathrm{Cov}(X,Y)\text{=}\mathbb{E}[(X\text{-}\mathbb{E}[X])(Y\text{-}\mathbb{E}[Y])]$
+\subsection*{Distributions}
+$\mathcal{N}(x|\mu, \sigma^2)\text{=}\frac{e^{\text{-}(x\text{-}\mu)^2/(2\sigma^2)}}{\sqrt{2\pi\sigma^2}}$\\
+$\mathcal{N}(x|\bm{\mu}, \bm{\Sigma})\text{=} \frac{e^{\text{-}\frac{1}{2}(\mathbf{x}\text{-}\bm{\mu})^\text{T}\bm{\Sigma}^{\text{-}1}(\mathbf{x}\text{-}\bm{\mu})}}{(2\pi)^{D/2}|\bm{\Sigma}|^{1/2}} $\\
+$\mathrm{Exp}(x|\lambda){\text{=}}\lambda e^{\text{-}\lambda x}$, $\mathrm{Ber}(x|\theta){\text{=}}\theta^x (1{\text{-}}\theta)^{(1\text{-}x)}$\\
+Sigmoid: $\sigma(x)\text{=}1/(1\text{+}e^{\text{-}x})$\\
+unif$(a,b):$ $x\in [a,b]? \frac{1}{b-a} : 0$
+
+%\subsection*{Chebyshev \& Consistency}
+%$\mathbb{P}(|X\text{-}\mathbb{E}[X]|\geq \epsilon)\leq \frac{\mathbb{V}[X]}{\epsilon^2}$\\
+%$\lim_{n\rightarrow\infty} P(|\hat{\mu}\text{-}\mu |>\epsilon)\text{=}0$
+
+
+
+%\subsection*{Matrix Derivations}
+%$\frac{\partial \mathbf{a}^\text{T}\mathbf{x}}{\partial\mathbf{x}}{\text{=}}\mathbf{a} \quad \frac{\partial \mathbf{a}^\text{T}\mathbf{Xb}}{\partial\mathbf{X}}{\text{=}}\mathbf{ab}^\text{T} \quad \frac{\partial \mathbf{a}^\text{T}\mathbf{X}^\text{T}\mathbf{b}}{\partial\mathbf{X}}{\text{=}}\mathbf{ba}^\text{T}$
+%$\frac{\partial \mathbf{a}^\text{T}\mathbf{Xa}}{\partial\mathbf{a}}{\text{=}}\mathbf{a}^\text{T}(\mathbf{X}\text{+}\mathbf{X}^\text{T})$,$\frac{\partial \mathbf{K}^{\text{-}1}}{\partial K}\text{=}\text{-}\mathbf{K}^{\text{-}1}\mathbf{K}'\mathbf{K}^{\text{-}1}$\\
+% $\frac{\partial}{\partial\mathbf{x}} \mathbf{f(x)}^\text{T}\mathbf{g(x)}\text{=}\mathbf{f(x)}^\text{T}\frac{\partial \mathbf{g(x)}}{\partial\mathbf{x}}\text{+}\mathbf{g(x)}^\text{T}\frac{\partial\mathbf{f(x)}}{\partial\mathbf{x}}$\\
+%$\mathbf{X}^\text{T}\mathbf{X}$: invertible if no no zero eigenvalues.
+%Inversion unstable if ratio from $\mathbf{X}$'s smallest EV to the largest is big.
+
+
+% =================================== Optimizaiton ====================================
+\section*{Optimization}
+\subsection*{Gradient Descent}
+$\theta^{\mathrm{new}}\leftarrow\theta^{\mathrm{old}}\text{-}\eta\nabla_{\theta}\mathcal{L}$\\
+Convergence isn't guaranteed.\\
+Less zigzag by adding momentum: \\$\theta^{(l\text{+}1)}\leftarrow\theta^{(l)}\text{-}\eta\nabla_{\theta}\mathcal{L}\text{+}\mu(\theta^{l}\text{-}\theta^{(l\text{-}1)})$\\
+- Mini-batch: SGD
+\subsection*{Newton's Method}
+Use 2nd order derivation. (Hessian)
+$\theta^{\mathrm{new}}\leftarrow\theta^{\mathrm{old}}\text{-}(\nabla_{\theta}\mathcal{L}/\nabla^2_{\theta}\mathcal{L})$\\
+$H\text{=}\nabla^2_{\theta}\mathcal{L}$ has to be p.d (convex func).
+%\begin{itemize}
+%	\item Gradient Descent: Depends on $\eta$, but is computationally easier
+%	\item Newton's Method: Requires $\mathbf H^{-1}_{\textit{NL}}$ but gets better updates and does not require a learning rate.
+%\end{itemize}
+
+\subsection*{Bias-Variance tradeoff}
+Bias($\hat{f}$)$=\mathbb{E}[\hat{f}]-f$\\
+Var($\hat{f}$)$=\mathbb{E}[(\hat{f}-\mathbb{E}[\hat{f}])^2]$\\
+$|\mathcal{Z}|\downarrow {\color{gray} \uparrow} \quad|\mathcal{F}|\uparrow {\color{gray} \downarrow}\Rightarrow\mathrm{Var}\uparrow{\color{gray} \downarrow}\quad\mathrm{Bias}\downarrow {\color{gray} \uparrow}$\\
+
+\textbf{Pred. error } = var + b$^2$ \text{+} n
+$
+		\E_D\E_{Y\mid X\text{=}x}(\hat f(x) \text{-} Y)^2 \text{=}$ $
+	\E_D(\hat f(x) \text{-} \E_D(\hat f(x))^2 
+	\text{+} (\E_D(\hat f(x))$ $ \text{-} \E(Y\mid X\text{=}x))^2 
+	\text{+}  \E(Y \text{-} \E(Y\mid X\text{=}x))^2
+$
+
+% =================================== Loss Functions ====================================
+\subsection{Loss-Functions}
+\textbf{0-1 Loss: } Piecewise cont, not diff
+$\mathcal L^{0-1}\left(y, c(x)\right) \text{=} (c(x)\text{=}y)$ ? $0:1$
+
+%\textbf{exponential Loss: } 
+%$
+%\mathcal L^{\exp}\left(y, c(x)\right) = 
+%\exp(-yc(x))
+%	\begin{cases}
+%		e^{-1} &\textit{if } c(x) = y \\
+%		e &\textit{if } c(x) \neq y
+%	\end{cases}
+%$
+
+\textbf{Hinge Loss: } 
+$
+\mathcal L^{\text{hinge}}\left(y, c(x)\right) \text{=} \max(0, 1-w^Txy)$ 
+
+
+\textbf{Perceptron Loss: }
+$
+\mathcal L^{\text{perc}}\left(y, c(x)\right) \text{=}  yw^Tx< 0$ ? $\text{-}y w^Tx:0$  
+
+\textbf{exponential Loss: }
+$
+\mathcal L^{\exp}\left(y, c(x)\right) = 
+\exp(-yc(x))$
+
+\textbf{Logistic Loss: }
+$
+\mathcal L^{\log}\left(y, c(x)\right) = \log( 1 + \exp(-yc(x)))$
+
+\section*{Risks and Losses}
+Conditional Expected Risk\\
+$R(f, X) \text{=} \int_{\mathbb{R}} \mathcal{L}(Y,f(X))\mathbb{P}(Y|X)d Y$\\
+Total Expected Risk
+$R(f) \text{=}$\\
+$\mathbb{E}_{X}[R(f,X)] \text{=}\int_{\mathcal{X}}R(f,X)\mathbb{P}[X]d X $ $\text{=}
+\int_{\mathcal{X}}\int_{\mathbb{R}} \mathcal{L}(Y,f(X))\mathbb{P}[X,Y]d Xd Y$.
+
+
+Empirical Risk Minimizer (ERM) $\hat{f}$:\\
+$\hat{f} \in \argmin_{f \in \mathcal{C}} \hat{R}(\hat{f}, Z^{train})$\\
+% Training error:\\
+$\hat{R}(\hat{f}, Z^{train/test}) \text{=} \frac{1}{n} \sum_{i\text{=}1}^n Q(Y_i, \hat{f}(X_i))$\\
+
+% $\hat{R}(\hat{f}, Z^{test}) \neq \mathbb{E}_{X}[R(f,X)]$
+$Z^\text{train}\text{=}{(X_1,Y_1),...,(X_n,Y_n)}$ \\
+
+
+% =================================== Math ====================================
+$\mathbb{P}[X|Y]\text{=}\frac{\mathbb{P}[X,Y]}{\mathbb{P}[Y]}\text{=}\frac{\mathbb{P}[Y|X]\mathbb{P}[X]}{\mathbb{P}[Y]}$
+\section*{Math and Basics}
+\subsection*{Some gradients}
+\begin{minipage}[t][][t]{\columnwidth}
+\begin{tabular}{ p{0.13\columnwidth} | p{0.22\columnwidth} ||p{0.13\columnwidth} | p{0.22\columnwidth}}
+		$\mathbf{f}$ & $\mathbf{\nabla_x f}$ & $\mathbf{f}$ & $\mathbf{{d f} / {d x}}$\\\hline
+  		$\norm{x}_2^2$ &  $2x$ & ${a}^Tx$ &  $a$\\
+  		$\norm{x}_1$  & $\text{sng}(x)$ &  $x^Ta$ & $a$\\
+  		$x^\text{T} A x$ & $(A \text{+} A^\text{T}) x$  & $\sigma$  & $\sigma(1{-}\sigma)$ \\	
+  		$x^Tx$ & $2x$	 & &
+\end{tabular}
+\end{minipage}
+
+
+$\nabla_\beta (y \text{-} X\beta)^T(y\text{-}X\beta) \text{=} 2(X^TX\beta \text{-} X^Ty ) $
+
+
+\subsection*{Positive semi-definite matrices $M$}
+$\forall x \in \mathbb{R}^n: x^\text{T}Mx \geq 0 \Leftrightarrow$\\
+all eigenvalues of $M$ are pos: $\lambda_i\geq 0$\\
+%lin. functions are convex, combination of convex are convex
+
+% =================================== Kernels ====================================
+\subsection*{Kernels}
+Similarity based reasoning \\
+$K(\mathbf{x},\mathbf{x'})$ pos.semi-def. (all EV $\geq$ 0)\\
+Gram Matrix $K{=}K(\mathbf{x}_i, \mathbf{x}_i)$, $1{\leq} i,j{\leq} n$\\
+$K(\mathbf{x}, \mathbf{x'}) \text{=} \phi(\mathbf{x})^T\phi(\mathbf{x'})$,$K(\mathbf{x},\mathbf{x'})\text{=}K(\mathbf{x'},\mathbf{x})$\\
+\sepline
+$K(\mathbf{x}, \mathbf{x'})=K_1(\mathbf{x}, \mathbf{x'})K_2(\mathbf{x}, \mathbf{x'})$\\
+$K(\mathbf{x},\mathbf{x'})=\alpha K_1(\mathbf{x}, \mathbf{x'})+\beta K_2(\mathbf{x}, \mathbf{x'})$\\
+$K(\mathbf{x},\mathbf{x'}){=}K_1(h(\mathbf{x}), h(\mathbf{x'}))\quad h:\mathcal{X}{\rightarrow}\mathcal{X}$\\
+$K(\mathbf{x},\mathbf{x'}){=}h(K_1(\mathbf{x}, \mathbf{x'}))\quad h$: poly/exp\\
+Kernel Function Examples:\\
+$K(\mathbf{x},\mathbf{x'}){=}\mathbf{x}^T\mathbf{x'}\quad K(\mathbf{x},\mathbf{x'}){=}(\mathbf{x}^T\mathbf{x'}{+}1)^p$\\
+RBF(Gauss):$K(\mathbf{x},\mathbf{x'}){=}e^{-||\mathbf{x}{-}\mathbf{x'}||_2^2/h^2}$\\
+Sigmoid:$K(\mathbf{x},\mathbf{x'}){=}\mathrm{tanh}(\alpha\mathbf{x}^T\mathbf{x'}+c)$\\
+

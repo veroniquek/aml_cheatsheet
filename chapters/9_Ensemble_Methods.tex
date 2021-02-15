@@ -1,0 +1,23 @@
+\section{Ensemble Methods}
+\subsection{Bagging}
+ Bootstrap sets: Draw $M$ bootstrap sets, Train $M$ base models $b^{(1)}, ... , b^{(M)}$, aggregate
+ 
+\subsubsection{Random forests}
+Bagging with trees. Each tree considers \textbf{subset of variables}. \textbf{Reduce corr.} between base trees.
+
+\subsection{Boosting }
+Fit models iteratively (model depends on prev. fitted). Each m. gives higher weight to the observations that were wrong in prev. step).
+
+
+\subsubsection{Ada Boost (Adaptive Boosting)}
+ Loss function: $0$\text{-}$1$ Loss,  place high weights on samples that are very hard to classify. Detect Outliers by high w.
+ 
+\subsubsection{Gradient Boosting}
+Learn dir from the residual error instd of updating the weights. 
+$	
+	f_M(x) \text{=} \sumi M \beta_i h_i(x)
+$
+
+\subsubsection{Forward Stagewise Additive Modeling}
+Method to approximately compute a classifier of the form $c(x) \text{=} \mathit{sgn}(\sum_t\alpha_t b^{(t)}$ that approximately minimizes the empirical loss $\sumin L(y_i, c(x_i))$.
+$\Rightarrow$ \textbf{AdaBoost  equ.}

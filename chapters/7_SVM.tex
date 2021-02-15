@@ -1,0 +1,89 @@
+\subsection{Lagrange Dual Formulation}
+$\min_w f(w) \textit{ s.t. } g_i(w) = 0, h_j(w) \leq 0$\\
+\begin{enumerate}
+  \item  Generalized Lagrangian: $\mathcal L(\mathbf w, \lambda, \alpha) = f(\mathbf w) + \sum_i\lambda_ig_i(\mathbf w) + \sum_{j} \alpha_jh_j(\mathbf w), \alpha_j\geq 0$ \
+  \item  $\max_{\alpha, \lambda} \min_w  \mathcal L\leq \min_w \max_{\alpha, \lambda} \mathcal L$
+  \item constraints $\nabla_\w \mathcal L = 0, \nabla_{w_0} \mathcal L = 0$
+  \item $\max_{\alpha, \lambda} \mathcal L$ with plugged in $\Rightarrow\alpha_i$
+\end{enumerate}
+
+\subsection{Slaters $\Rightarrow$ Str. dual. $\Rightarrow$ compl. Sl. }
+- weak d.: $d^*\leq p^*$, strong d: $d^* = p^*$ \\
+- slaters: $\exists x: h_j(x) < 0$ (strict) \\
+Complementary Slackness: $\lambda_if_i(x^*) {=} 0 \quad \forall i: $
+$ \lambda_i{>}0 \Rightarrow f_i(x^*) {=} 0, f_i(x^*) {<} 0 \Rightarrow \lambda_i {=} 0$
+\subsection{Support Vector Machine (SVM)}
+$\min_{w, w_0}\frac{1}{2}\norm{w}$ s.t. $1\text{-} y_i(\w^Tx_i \text{+} w_0) \leq 0$
+
+
+ $\mathbf{y}_i$ are support vectors
+ 
+\subsubsection{Functional Margin Problem:}
+minimizes $||\mathbf{w}||$ for $m{\text{=}}1$: 
+$L(\mathbf{w}, w_0, \mathbf{\alpha}) {\text{=}}$\\
+$\text{=}\frac{1}{2}\mathbf{w}^T\mathbf{w}{\text{-}}\sum_{i\text{=}1}^n\alpha_i[z_i(\mathbf{w}^T\mathbf{y}_i{}\text{+}w_0){\text{-}}1]$\\
+where $\alpha$s are Lagrange multipliers.\\
+
+
+
+
+\subsubsection{Dual Representation: }
+Conditions: 
+	$\frac{\partial\mathcal L}{\partial \w} = 0,
+	\frac{\partial\mathcal L}{\partial w_0} = 0 $
+	
+	$\Rightarrow w^* = \sum_i\alpha_i y_i x_i, \quad \sum_i \alpha_i y_i = 0 $
+	
+\vspace{0.1em}
+%$\frac{\partial L}{\partial w} {\text{=}} 0$ and $\frac{\partial L}{\partial w_0} {\text{=}} 0$ give \textbf{constraints}\\
+%$\mathbf{w}\text{=}\sum_{i\text{=}1}^n\alpha_iz_i\mathbf{y_i} \quad 0\text{=}\sum_{i\text{=}1}^n\alpha_iz_i$\\
+%Replacing in $L(\mathbf{w}, w_0, \mathbf{\alpha})$ we get\\
+	$\max_\alpha \frac{1}{2}\sum_{i,j} \alpha_i\alpha_jy_iy_jx_i^Tx_j + \sum_i \alpha_i - \sum_{i,j} \alpha_i\alpha_jy_iy_jx_i^Tx_j, \alpha_i\geq 0, \sum_i\alpha_i y_i = 0$
+
+% \textbf{optimal hyperplane}:
+% $\mathbf{w^*}\text{=}\sum_{i\text{=}1}^n\alpha_i^*z_i\mathbf{y_i}$\\
+% $ w_0^*{\text{=}}{\text{-}}\frac{1}{2}(\mathrm{min}_{z_i\text{=}1}\mathbf{w^*}^T\mathbf{y_i}{\text{+}}\mathrm{max}_{z_i\text{=}\text{-}1}\mathbf{w^*}^T\mathbf{y_i})$\\
+% $\mathbf{\alpha}$ maximizes the dual.\\
+% Only SVs ($\alpha_i\not\text{=}0$) contribute to eval.\\
+Simplifies to: $\max_\alpha \sum_i \alpha_i\text{-}\frac{1}{2}\sum_{i,j} \alpha_i\alpha_jy_iy_jx_i^Tx_j$, s.t.
+$\alpha_i\geq 0, \sum_i\alpha_i y_i = 0$
+
+\textbf{Optimal Margin:} $\mathbf{w}^T\mathbf{w}\text{=}\sum_{i\in SV}\alpha_i^*$\\
+%Discrim.: $g^*(\mathbf{x}){\text{=}}\sum_{i\in SV}z_i\alpha_i\mathbf{y_i}^T\mathbf{y_i}{\text{+}}w^*_0$\\
+%$\mathrm{class} \text{=} \mathrm{sign(\mathbf{y}^T\mathbf{w}^*\text{+}w_0^*)}$
+\sepline
+${w}^T x + w_0 = \sumi n (\alpha_iy_ix_i)^Tx + w_0 = \sumi n \alpha_i y_i \langle x_i, x \rangle + w_0$, efficient.
+
+
+\subsection*{Non\-Linear SVM}
+Use kernel in discriminant funct: $g(\mathbf{x})\text{=}\sum_{i,j\text{=}1}^n\alpha_i\alpha_jz_iz_jK(\mathbf{x_i},\mathbf{x})$\\
+%E.g solve the XOR Problem with:
+%$K(x,y)\text{=}(1\text{+}x_1y_1\text{+}x_2y_2)^2$
+
+\subsection*{Soft Margin SVM (relax constraints)}
+$\min_{\w, w_0, \xi} \frac{1}{2}\norm{\w}^2 + C\sumin\xi_i$\\
+s.t. $ y_i(\w^Tx_i + w_0) \geq 1 - \xi_i, \quad \xi_i \geq 0$
+
+
+
+
+
+
+
+\subsection*{Multiclass SVM}
+score per class, set margin as min diff of largest + second largest score.
+$\min_w\frac{1}{2}\norm{w} = \min_\{w_z\}_{n=1}^M \frac{1}{2}\sum_z^M w_z^Tw_z$ \\
+$w^T = w_1^T, ..., w_M^T$ s.t. $\forall y_i\in Y$
+$(\mathbf{w}_{z_i}^T\mathbf{y}_i\text{+}w_{z_i,0})\text{-}\max_{z\not\text{=}z_i}(\mathbf{w}_z^T\mathbf{y}_i\text{+}w_{z,0})\geq 1$ \\
+$\hat z = \argmax_z(w_z^Ty + w_{z,0})$
+
+
+
+\subsection*{Structured SVM}
+$\min_w \frac{1}{2} \norm{w}^2$ 
+		s.t. $w^T\Psi(x_i, y_i) \geq {\color{imp}\Delta(y_i, y')} + w^T\Psi(x_i, y')$
+		$\forall y'\neq y_i, i\leq n$
+		\sepline
+Output Space Representation as joint feature map: $\mathbf{\psi}(z,\mathbf{y})$\\
+Scoring function: $f_{\mathbf{w}}(z,\mathbf{y})\text{=}\mathbf{w}^T\mathbf{\psi(z, \mathbf{y})}$\\
+Classify: $\hat{z}\text{=}h(\mathbf{y})\argmax_{z\in\mathcal{K}}f_{\mathbf{w}(z, \mathbf{y})}$

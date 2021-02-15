@@ -1,0 +1,31 @@
+\section{Clustering}
+k\text{-}means or EM.
+Neither can detect outliers! EM more sensitive to outl. (no constraints on the covariance matrix).
+
+\subsection{k-means}
+Assign each $x$ to closest center. Compute new centers. Repeat.
+\subsection{Gaussian Mixtures}
+Direct optimization of log\text{-}likelihood is (sum within the log) $\to$ no closed form solution. 
+
+\textbf{EM Mixture models} solve this: introduce latent indicator vars for mode assignments, max. joint likelihood of observable and latent vars.
+
+\subsection{EM algorithm}
+$M_{\x c} \text{=} 
+	\begin{cases}
+		1 &\textit{ c  generated } \x\\
+		0 &\textit{ otw }
+	\end{cases}
+$
+
+This gives
+$	P(\mathcal X, M|\theta) \text{=} \prod_{x\in\mathcal X}\prod_{c\text{=}1}^k(\pi_c P(\x|\theta_c))^{M_{\x c}}$
+
+
+\subsubsection{E\text{-}Step}
+$ \gamma_{\x c} \text{=} \E_M[M_{\x c}| \mathcal X, \theta^{(j)}]\text{=}\frac{P(\x|c, \theta^{(j)})P(c|\theta^{(j)})}{P(\x|\theta^{(j)})}$
+
+\subsubsection{M\text{-}Step}
+$			\mu_c^{(j\text{+}1)} \text{=} \frac{\sum_{\x\in \mathcal X}\gamma_{\x c}\x}{\sum_{\x\in \mathcal X}\gamma_{\x c}}$ \\
+			$(\sigma_c^2)^{(j\text{+}1)} \text{=} \frac{\sum_{\x\in \mathcal X}\gamma_{\x c}(\x\text{-}\mu_c)^2}{\sum_{\x\in \mathcal X}\gamma_{\x c}} $\\
+		$\pi_c^{(j\text{+}1)} \text{=} \frac{1}{|\mathcal X|}\sum_{\x\in \mathcal X}\gamma_{\x c}$
+

@@ -1,0 +1,51 @@
+\section{Density Estimation with Parametric Models}
+\subsection{Maximum Likelihood (MLE)}
+Likelihood: $\mathbb{P}[\mathcal{X}|\theta]\text{=}\prod_{i\leq n}p(x_i|\theta)$\\
+Find: $\hat{\theta}\in \argmax_\theta \mathbb{P}[\mathcal{X}|\theta]$\\
+Procedure: solve $\nabla_\theta \log \mathbb{P}[\mathcal{X}|\theta]\equiv 0$\\
+Consistent: converges to best $\theta_0$.
+
+\subsection{Maximum A Posteriori (MAP)}
+Assume prior $\mathbb{P}(\theta)$\\
+Find: $\hat{\theta}\in \argmax_\theta P(\theta|\mathcal{X}) \text{=}$\\
+$\text{=}\argmax_\theta P(\mathcal{X}|\theta)P(\theta)$\\
+Solve $\nabla_\theta log P(\mathcal{X}|\theta)P(\theta)\text{=}0$
+
+\subsection{Bayesian density learning}
+Prior Knowledge of $p(\theta)$,\\
+Find Posterior Density: $p(\theta|\mathcal{X})$.\\
+$\mathcal{X}^n\text{=}\{x_1, \cdots, x_n\}$\\
+$p(\theta|\mathcal{X}^n)\text{=}\frac{p(x_n|\theta)p(\theta|\mathcal{X}^{n\text{-}1})}{\int p(x_n|\theta)p(\theta|\mathcal{X}^{n\text{-}1} d\theta}$
+% Difficult \& needs prior knowledge. But better against overfitting.
+
+
+\subsection{Frequentist (Fisher): ML estimation}
+\begin{enumerate}
+	\item Define parametric model (e.g. $\mathcal N(\theta, 1)$)
+	\item Define the likelihood as function of parametric model (prob of the observations given the parameter $\theta$), e.g.
+	$\mathbf P(y_1, ..., y_n \mid \theta) \text{=}$ \\$\prod_{i\leq n}\mathbf P(y_i\mid \theta) \text{=} \prod_{i\leq n}\mathcal N(y_i, \theta, 1)
+	$
+	\item estimator maximizes \\$\hat\theta_{ML} \text{=} \arg\max_\theta \mathbf P(y_1, ..., y_n \mid \theta)$ (log\text{-}likelihood)
+\end{enumerate}
+
+\subsection{Properties of ML Estimators:}
+\begin{itemize}
+	\item Consistent ($\theta_{ML} \to \theta_0$) as $n\to \infty$
+	\item Equivariant: $\hat\theta_{ML}$: $\theta$, $g(\hat\theta_{ML})$: $g(\theta)$, $g$ invertible
+	\item Asymptotically normal: $1/\sqrt n (\theta_{ML} \text{-} \theta_0)$ converges to rv with distribution $\mathcal N(0, J^{\text{-}1}(\theta)I(\theta)J^{\text{-}1}(\theta)$
+	\item Asymptotically efficient: $\theta_{ML}$ minimizes $\mathbb E[(\theta_{ML} \text{-} \theta_0)^2]$. I.e. $\mathbb E[(\theta_{ML} \text{-} \theta_0)^2] \text{=} \frac{1}{I_n(\theta_0)}$ 
+\end{itemize}
+
+\subsubsection{Rao Cramer Bound}
+There exists no estimator such that $\mathbb E[(\hat\theta^* \text{-} \theta_0)^2] \text{=} 0$, 
+	$  
+		\mathbb E[(\hat\theta \text{-} \theta_0)^2] \geq \frac{1}{I_n(\theta_0)} ,
+	$
+	 $\hat\theta$ unbiased
+	$I_n(\theta_0) \text{=} \text{-}\E[\frac{\partial^2\log[\mathcal X_n|\theta]}{\partial\theta^2} ]$ \\
+	Efficiency $e(\theta_n) \text{=} \frac{1}{\text{Var}[\hat\theta_n] I_n(\theta)}$ \\
+	$e(\theta_n) \text{=} 1$ (efficient) 
+	$\lim_{n\to\infty} e(\theta_n) \text{=} 1$ (asym. efficient)
+\sepline
+\textbf{Stein estimator}
+For finite samples might be better sol (ML estimators not nec. efficient).

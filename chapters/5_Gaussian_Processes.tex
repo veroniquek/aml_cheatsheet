@@ -1,0 +1,51 @@
+\section{Non-Linear Regression}
+\subsection{Feature Transformations}
+$
+		f(X) \text{=} \sum_{m\text{=}1}^M \beta_mh_m(X), 
+		h_m(X) : \R^d\mapsto \R, 1\leq m \leq M
+$
+\begin{itemize}
+  \item Determine Boundaries e.g. $|x_1| + |x_2| < 1 \Rightarrow |x_1| + |x_2| - 1 < 0$. Use $\phi(X) = |x_1| + |x_2| - 1$, $w =1$
+  \item 2 boundaries: multiply 2 equations
+ \end{itemize}
+
+\subsection{Gaussian Process Regression}
+joint Gaussian over all outputs\\
+$\mathbf{y}=f(X)+\epsilon \quad \epsilon\sim \mathcal{N}(\epsilon|0,\sigma\mathbb{I}_n)$, $f(X) \sim GP(m(X), k(X,X'))$\\
+
+$m(X) = \mathbf 0$ if $f(X)=X\beta$
+\subsubsection*{Prediction}
+
+$P(\begin{bmatrix}
+\mathbf{y}\\
+y_*\\
+\end{bmatrix}){=}\mathcal{N}(\mathbf{y}|m(X),\begin{bmatrix}
+\mathbf{C_n} & \mathbf{k} \\
+\mathbf{k^T} & c \\
+\end{bmatrix})$\\
+\vspace{0.5em}
+$p(y_*|\mathbf{x_*}, \mathbf{X}, \mathbf{y}){=} \mathcal{N}(y_*|\mu_{*}, \sigma^2_{*})$\\
+$\mu_{y_*} = \mathbf{k}^T\mathbf{C}_n^{-1}\mathbf{y}\quad\ \  \mathbf{C}_n=\mathbf{K}+\sigma^2\mathbb{I}$\\
+$\sigma^2_{*}{=}c{-}\mathbf{k}^T\mathbf{C}_n^{-1}\mathbf{k}\quad c{=}k(x_*,x_*){+}\sigma^2$\\
+$\mathbf{k}=k(x_*,\mathbf{X})\quad\ \ \ \ \ \ \mathbf{K}_{ij}=k(x_i,x_j)$\\
+
+
+
+
+%\subsubsection{Reasons to use Gaussian processes for Regression}
+%\begin{enumerate}
+%	\item Like Bayesian: allow quantify uncertainty from errors (not just instrinsic noise).
+%	\item Non\text{-}parametric and can hence model essentially arbitrary functions of the input points
+%	\item Natural ways to introduce kernels into a regressino modeling framework
+%	\item Simple and straightforward linear algebra implementations
+%\end{enumerate}
+
+
+	
+	
+	
+	
+	
+	
+	
+	

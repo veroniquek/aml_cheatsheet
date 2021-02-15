@@ -1,0 +1,86 @@
+\section{Computational Learning Theory}
+\textbf{Attention: There are different notiations used due to different notations in lecture notes and slides.}
+
+\textit{Minimizing risk is generally unreasonable, because estimating density is more difficult than minimizing the expected risk. It is only plausible if substantial prior information on $\P(x,y)$ is available and $\P(x,y)$ can be defined up to its parameters. (Vapnik, 1982)}
+\subsection{Empirical Risk Minimization}
+\begin{itemize}
+	\item Induction principle: Empirical Risk Minimization. Select the classifier $\hat c_n^*\in\mathcal C$ with the smallest error on the training data $\mathcal Z=\{(x_1, y_1), ... (x_n, y_n)\}$
+	$$
+		\hat c_n^* = \argmin_{c\in\mathcal C}\underbrace{\frac{1}{n}\#\{(x_i, y_i):c(x_j)\neq y_j, 1\leq i\leq n\}}_{\textit{Training error $\hat{\mathcal R}_n(c)$}}
+	$$
+	\item Empirical Classification Error: $\hat{\mathcal R}_n(c) = \frac{1}{n}\sumj n \mathbb I_{\{c(x_j)\neq y_j\}}$
+	\item Expected Classification Error $\mathcal R(c) = \P\{c(X)\neq Y\}$ is the quality measure which we care about.
+	\item \textbf{Goal: } Derive a distribution independent bound for the prob. of larve deviatons between the expected risk of the ERM classifier and the opimal classifier:\\
+		$\P\{\mathcal R(c_n^*)-\inf_{c\mathcal C}\mathcal R(c) > \epsilon\}$
+	 \item Generalization Error: $\mathcal R(c_n^*)=\P\{c_n^*(X)\neq Y|\mathcal Z\}$
+	 \item \textbf{Problem: } we cannot measure $\mathcal R(c_n^*)$
+\end{itemize}
+
+\subsection{VC inequality}
+\textbf{How can we bound the difference between expected risk $R(x)$ and empirical risk $\hat R_n(x)$?} Vapnik-Chervonenkis Inequality.
+
+\begin{itemize}
+	\item $\hat c \in \argmin_{c\in\mathcal C} \hat R_n(c) = \argmin_{c\in\mathcal C} |\{\hat c(x_i)\neq y_i\}|$ \\is the minimizer of emirical risk and
+	\item $c^*\argmin_{c\in\mathcal C} R(c)$ is the minimizer of the expected risk.
+\end{itemize}
+
+Consider
+\begin{align*}
+	R(\hat c) - \inf_{c\in\mathcal C}R(c) 	&= \underbrace{R(\hat c) - \hat R_n(\hat c)}_{\leq\sup_{c\in\mathcal C}|R(c) - \hat R_n(c)|} + \underbrace{\hat R_n(\hat c)}_{\leq \hat R_n(c^*)} - R(c^*) \\
+											&\leq \sup_{c\in\mathcal C}|R(c) - \hat R_n(c)| 
+												+ \underbrace{\hat R_n(c^*) - R(c^*)}_{\leq\sup_{c\in\mathcal C} |R(c) - \hat R_n(c)|}\\
+											&\leq 2 \sup_{c\in\mathcal C}|R(c) - \hat R_n(c)| 
+\end{align*}
+The difference between the expected risk of the ERM and smallest expected risk is bounded by twice the worst derivation of expected from empirical risk!
+
+\subsubsection{Error Probability Bounds: }
+\begin{align*}
+	\P(R(\hat c) - \inf_{c\in\mathcal C}R(c) \geq\epsilon) 	&\\
+	\textit{(VC Inequality)}									&\leq \P(\sup_{c\in\mathcal C}|R(c) - \hat R_n(c)|) \\
+	\textit{(Union Bound)}									&\leq \sum_{c\in\mathcal C}\P\left(|R(c) - \hat R_n(c)|\geq\frac{\epsilon}{2}\right) \\
+															&= \mathit{ub}(n, \epsilon) = \delta
+\end{align*}
+(\textit{Union Bound: $\P(e_1\lor e_2 \lor ... \lor e_k)\leq \sum P(e_j)$})
+
+Solving the last equation we get: 
+\begin{align*}
+	\mathit{ub}(n, \epsilon) 	&= \delta \\
+		\implies	\epsilon		&= \mathit{st}(n, \delta) 
+\end{align*}
+
+We have $|R(c) - \hat R_n(c)| <\frac{\epsilon}{e} = \mathit{st}(n, \delta)$ with high probability $1-\delta$
+
+We can bound an expected cost by
+$$
+	\forall c\in\mathcal C: R(c) < \underbrace{\hat R_n(c)}_{\textit{computable}} + \underbrace{\frac{1}{2} \mathit{st}(n,\delta)}_{\textit{overfitting correction}}
+$$
+
+\textit{Risk bounding is a difficult task. In classification, the risk is bounded by $0\leq R(c)\leq 1$. Therefore we can achieve distribution independent bounds.}
+
+
+\subsubsection{Strategies for tight(er) bounds:}
+\begin{itemize}
+	\item Estimate how different are functions when they are evaluated on finite samples
+	\item Approximate unknown true distribution by empirical distribution
+\end{itemize}
+
+\subsubsection{Hoeffding's Inequality}
+(I think this was not in the lecture)
+
+{\color{gray}
+\textbf{Lemma 2: } (\textit{Markov inequality) Let X be a non-negative random variable. Then}
+$$
+	\P\{X\geq \epsilon\}\leq \frac{\E[X]}{\epsilon}
+$$
+
+\textbf{Lemma 3} \textit{Let $X$ be a random variable with $\E[X]=0$ and $a\leq X\leq b$. Then for $s>0$ it holds that}
+$$
+	\E[\exp(sX)]\leq \exp(s^2(b-a)^2/8)
+$$
+
+\textbf{Hoeffding's Theorem / Chernoff Bound} \textit{Let $X_1, ..., X_n$ be independent bounded random variables such that $X_i$ falls in the interval $[a_i, b_i]$ with probability 1 and let $S_n=\sumi n X_i$. Then for any $t>0$ we have }
+\begin{align*}
+	\P\{S_n - \E [S_n]\geq t\} & \leq \exp\left(-\frac{2t^2}{\sumi n (b_i - a_i)^2} \right) \\
+	\P\{S_n - \E [S_n]\leq -t\} & \leq \exp\left(-\frac{2t^2}{\sumi n (b_i - a_i)^2} \right)
+\end{align*}
+}

@@ -1,0 +1,149 @@
+\section{Non\text{-}Param Bayesian Methods}
+\subsection{Dirichlet (Multivariate Beta)} 
+	$		\mathit{Dir}(\x|\alpha) \text{=} \frac{1}{B(\alpha)}\cdot \prod_{k\text{=}1}^n x_k^{\alpha_k\text{-}1}
+	$
+	$
+		B(\alpha) \text{=} \frac{\prod_{k\text{=}1}^n \Gamma(\alpha_k)}{\Gamma(\sum_{k \text{=} 1}^n \alpha_k)}
+	$
+
+
+\subsubsection{Dirichlet Proces $\DP(\alpha, H)$:}
+ {\small$(G(T_1)...G(T_K))$$\sim$$Dir(\alpha H(T_1) .. \alpha H(T_k))$}
+
+\subsubsection{Stick\text{-}Breaking Process}
+$\beta_k \sim \Beta(1, \alpha)$,
+$\rho_k = \beta_k(1 - \sumi{k-1} \rho_i)$
+
+\textbf{Prior: }
+$
+	p(z_i\text{=}k|\z_{\text{-}i},\alpha) \text{=} 
+		\begin{cases}
+			\frac{N_{k, \text{-}i}}{\alpha \text{+} N \text{-} 1} 	& \textit{ existing k} \\
+			\frac{\alpha}{\alpha \text{+} N \text{-} 1} 		& \textit{otherwise} 
+		\end{cases}
+$
+
+\subsubsection{Chinese Restaurant Problem}
+Clustering property to draw samples. Sit at table $\propto$ \# people on it.
+
+
+
+\subsection{Gibbs Sampling}
+Init: assign data to cluster with prior $\pi_i$, $\sum \pi_i < 1$ (using e.g. stick-br.) \\
+Remove $x$ from $k$, compute $\theta_k$, Compute Gibbs sampler prob. (CRP) and sample new cluster assignment $z_i\sim p(z_i|x_{-i}, \theta_k)$
+
+\subsubsection{Final Gibbs sampler (Stick-Breaking):}
+$	p(z_i\text{=}k|\z_{\text{-}i},\x,\alpha,\mu) \text{=} \textit{Prior} \times \textit{likelihood}$ $
+	\text{=} \begin{cases}
+			\frac{N_{k, \text{-}i}}{\alpha \text{+} N \text{-} 1} p(x_i| \x_{\text{-}i, k}, \mu)	 \textit{ existing k} \\
+			\frac{\alpha}{\alpha \text{+} N \text{-} 1} p(x_i|\mu) \textit{otherwise} 
+		\end{cases}
+$
+
+%\textbf{Observation: } sampling $(\rho_1, ..., \rho_K) \sim \Dir(\alpha_1, ..., \alpha_K)$ is equivalent to sampling $\rho_1 \sim \Beta(\alpha_1, ..., \alpha_K)$ and $(\rho_2, ..., \rho_K) \sim \Dir(\alpha_2, ..., \alpha_K)$
+%
+%
+%We can keep doing this, but only if $\alpha \text{=} (\alpha_1, ..., \alpha_K)$ has finite length $K$.
+%
+%\textbf{Solution: } fix $\alpha$ s.t. $\beta_i\sim \Beta(1, \alpha) \forall i$
+%\begin{center}
+%	\includegraphics[width \text{=}  0.8\columnwidth]{images/12b\text{-}stick\text{-}breaking\text{-}2}
+%\end{center}
+%
+%This is called the GEM (Griffiths\text{-}Engen\text{-}McCloskey) distribution: 
+%$$
+%	\rho\sim \GEM (\alpha), \rho.\text{=} \{p_k\}_{k \text{=} 1}^\infty	
+%$$
+%
+%\textbf{Stick\text{-}Breaking Construction of the Dirichlet Process: }\\
+%If $\rho\sim \GEM(\alpha)$ and $\theta_k\sim H$ for $k \text{=} 1, 2, ...$, then 
+%$$
+%	G(\theta) \text{=} \sum_{k\text{=}1}^\infty\rho_k\delta_{\theta_k}(\theta)
+%$$
+%is a sample from $DP(\alpha, H).$
+%
+%If we repeatedly sample $\theta^{(1)}, \theta^{(2)}, ...$ from $G\sim \DP(\alpha, H)$, then we have $\theta^{(i)} \text{=} \theta_{k_i}$ for some $k_i$.
+%\begin{itemize}
+%	\item Sometimes we get a new value $(k_i\neq k_j \forall i<j)$
+%	\item Sometimes we get a repetition$(k_i \text{=}  k_j \text{ for some } i<j)$
+%	\item Think of $\theta^{(i)}, \theta^{(j)}$ with $k_i \text{=} k_j$ as points belonging to the \textbf{same cluster}.
+%\end{itemize} 
+%
+%\subsubsection{Chinese Restaurant Process}
+%\textbf{Technique to draw samples from a Dirichlet Process: }
+%\begin{itemize}
+%	\item Join an existing table with probability $\propto$ the number of people already sitting there
+%	\item Start a new table with probability $\propto \alpha$
+%\end{itemize}
+%$$
+%	P(\textit{customer $n\text{+}1$ joins table $\tau$}|\mathcal P) \text{=} 
+%		\begin{cases}
+%			\frac{|\tau|}{\alpha \text{+} n} & \textit{if $\tau \in \mathcal P$} \\
+%			\frac{\alpha}{\alpha \text{+} n} & \textit{Otherwise}
+%		\end{cases}
+%$$
+%\begin{itemize}
+%	\item $\alpha$ controls the number of new tables ($\alpha$ large: new table likely), 
+%	\item $|\tau|$ is the number of people on table $\tau$
+%	\item $\mathcal P$ is a table assignment (partition over the integers)
+%\end{itemize}
+%
+%
+%\textbf{Expected number of tables (i.e. clusters) created: }
+%$$
+%	\E[\textit{created tables}] \text{=} \sumi N\frac{\alpha}{\alpha \text{+} i} \sim O(\alpha\log(N)) ]
+%$$
+%\textit{"Rich\text{-}get\text{-}Richer"\text{-}effect (preferential attachment): Already popular clusters attract new datapoints}
+%\subsubsection{Exchangeability}
+%\textbf{Definition: } Let $(X_1, X_2, ...)$ a sequence of random variables. The sequence is exchangeable when, for every permutation $\pi$ of $\N$. The random vectors
+%$$
+%	(X_1, X_2, ...) \quad \textit{ and } \quad (X_{\pi(1)}, X_{\pi(2)}, ...)
+%$$
+%have the same distribution.
+%
+%\textbf{De Finetti's Theorem: } Let $(X_1, X_2, ...)$ be an infinitely exchangeable sequence (one that can be represented by conditionally independent random variables) of random variables. Then $\forall n$
+%$$
+%	p(X_1, ..., X_n) \text{=} \int \left(\prod_{i \text{=} 1}^n p(x_i|G)\right) dP(G)
+%$$
+%for some random variable $G$
+%
+%
+%\textbf{P\'{o}lya Urn}
+%\begin{itemize}
+%	\item Urn with colored balls
+%	\item Draw balls from the urn at random. After drawing a ball, put it back in the urn together with a new ball of the same color
+%\end{itemize}
+%
+%\textbf{Hoppe Urn}: P\'{o}lya Urn with special black ball
+%\begin{itemize}
+%	\item Urn with colored balls
+%	\item Draw balls from the urn at random. After drawing 
+%	\begin{itemize}
+%		\item If non\text{-}black ball: put it back in the urn together with a new ball of the same color
+%		\item If black ball: put it back in the urn with a new ball of the same color
+%	\end{itemize}
+%\end{itemize}
+
+%\begin{highlight}{Exchangeability Results}
+%\begin{itemize}
+%	\item CRP is identical to the hoppe earn process (we just need to add colors to the tables)
+%	\item Hoppe Urn and CRP are exchangeable: Can apply \textbf{De Finetti's theorem}
+%	\item DP is the rancom variable $G$ in De Finetti's theorem for Hoppe urn / CPR
+%	\item If the prior of $G$ is the DP, then CRP is how we assign points to clusters when we integrate out $G$.
+%\end{itemize}
+%\end{highlight}
+%\subsection{The DP Mixture Model} 
+%$\Theta$ is a set that parametrizes a set of probability distributions, $H$ fixed base measure on $\Theta$. Example:
+%\begin{itemize}
+%	\item $\Theta \text{=} \R$ with $\mu\in \Theta$ corresponding to $\mathcal N(\mu, \sigma)$ for some fixed $\sigma > 0$
+%	\item $H \text{=} \mathcal N(\mu_0, \sigma_0)$ for some $\mu_0\in \R, \sigma_0\in \R$
+%\end{itemize}
+%
+%Based on that we define the \textbf{DP Mixture Model} (a generative model):
+%\begin{itemize}
+%	\item Probabilities of clusters ("mixture weights"): $\rho \text{=} (\rho_1, \rho_2, ...)\sim\GEM(\alpha)$
+%	\item Center of clusters $\mu_k\sim \mathcal N(\mu_0, \sigma_0)$
+%	\item Assignments to clusters $z_i\sim \mathit{Categorical}(\rho)$
+%	\item Coordinates of data points $x_i \sim \mathcal N(\mu_{z_i}, \sigma)$
+%\end{itemize}
+

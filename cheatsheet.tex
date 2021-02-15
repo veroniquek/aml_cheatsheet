@@ -1,0 +1,271 @@
+\documentclass[11pt,a4paper,fleqn,landscape]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{setspace}
+\setstretch{0.9}
+\usepackage{soul}	% highlighting
+%--------------------------------Layout ------------------------------------
+\usepackage{multicol}	% multiple columns
+\usepackage{graphicx}	% images
+
+\usepackage{todonotes}
+\usepackage{tabularx,ragged2e}
+\usepackage{array, makecell}
+
+\pagestyle{empty}	% no page numbers
+% -------------------------Colors -----------------------------------------------
+\usepackage{xcolor}						% color
+\definecolor{imp}{RGB}{127, 0, 255}
+\definecolor{imp2}{RGB}{0, 204, 102}
+\definecolor{imp3}{RGB}{51, 153, 255}
+\definecolor{highlight}{RGB}{189, 255, 255}
+
+
+
+%--------------------------------Pseudocode------------------------------------------
+\usepackage[linesnumbered, ruled]{algorithm2e}
+\SetKwRepeat{Do}{do}{while} 					
+\SetKwRepeat{DoUntil}{do}{until}
+\SetKwRepeat{RepeatUntil}{repeat}{until}
+
+
+%% ----- Text -----
+%\usepackage[bitstream-charter]{mathdesign}		% packet that changes the math + text font
+%\let\circledS\undefined % conflict
+%
+%\usepackage[t1]{sourcesanspro}
+\usepackage[scaled=0.86]{helvet} 
+\usepackage{mathptmx}
+\usepackage[mathcal]{euscript}
+
+
+\renewcommand\emph[1]{\sethlcolor{highlight}\hl{#1}}
+
+%\renewcommand\rmdefault{phv}	% Set text font separately
+
+
+\setlength\parindent{0pt}		% no indent after paragraph
+
+\usepackage{enumitem}			% lists
+\setlist{nosep}
+\setlist[itemize]{leftmargin=1em}
+\setlist[enumerate]{leftmargin=*}
+\renewcommand{\labelitemii}{$\cdot$}
+\renewcommand{\labelitemi}{-}
+\renewcommand{\labelitemiii}{$\diamond$}
+
+
+% sections
+\usepackage{titlesec}
+
+
+
+
+
+% ----------------------------- Text formatting
+\usepackage{microtype}
+
+\usepackage{parskip}
+\setlength{\parskip}{0pt} %set space after paragraph
+%\setcounter{secnumdepth}{0} % no section numbers
+
+\usepackage{titlesec}
+
+
+
+\setkomafont{section}{\mysection}
+\newcommand{\mysection}[1]{%
+  	\normalfont\sffamily\bfseries\small%
+    \setlength{\fboxsep}{0cm}%already boxed
+    \colorbox{imp}{%
+    	
+        \begin{minipage}{\linewidth}%
+            \vspace*{0pt}%Space before
+            \leftskip2pt %Space left
+            \rightskip\leftskip %Space right
+            {\normalfont\sffamily\bfseries\color{white}
+                \fontshape{n}\fontsize{11}{11}#1{}{}}
+            \vspace*{0pt}%Space after
+        \end{minipage}%
+    }}
+    
+\setkomafont{subsection}{\mysubsection}
+\newcommand{\mysubsection}[1]{%
+  	\normalfont\sffamily\bfseries\small%
+    \setlength{\fboxsep}{0cm}%already boxed
+    \colorbox{imp2}{%
+        \begin{minipage}{\linewidth}%
+            \vspace*{0pt}%Space before
+            \leftskip2pt %Space left
+            \rightskip\leftskip %Space right
+            {\normalfont\sffamily\bfseries\color{white}
+                \fontshape{n}\fontsize{11}{11}#1{}{}}
+            \vspace*{0pt}%Space after
+        \end{minipage}%
+    }}
+
+    
+\titlespacing*{\section}{0pt}{0pt}{0pt}
+                            
+\titlespacing*{\subsection}{0pt}{0pt}{0pt}
+
+                
+\titlespacing*{\subsubsection}{0pt}{0pt}{0pt}
+\titleformat{\subsubsection}{\normalfont\sffamily\bfseries\color{imp2}
+                \fontshape{n}\fontsize{11pt}{11}\selectfont}{}{0pt}{}
+
+
+% --------------------------- tikz
+\usepackage{environ}
+\usepackage{fontawesome}
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+
+
+
+%% ----- Geometry -----
+\usepackage[top=1mm,bottom=1mm,left=1mm,right=1mm]{geometry}
+
+\setlength{\footskip}{15pt}
+\setlength{\columnseprule}{0.3pt}
+\setlength{\columnsep}{0.1em}
+
+%--------------------------------Math------------------------------------------
+%\usepackage{amsmath, amssymb,, mathtools, mathrsfs, units, empheq, gensymb}
+\usepackage{amsmath,bm}
+\usepackage{bbm}
+\usepackage{amssymb}
+
+\usepackage[makeroom]{cancel}	% cross out math expressions
+
+
+
+%--------------------------------- Hyperlinks --------------------------------------
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\urlstyle{same}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+
+%---------------------------------Commands--------------------------------------
+
+
+% separation line between sections (not used)
+\newcommand{\sepline}{\par\vspace{-0.7em}\centerline{\rule{\columnwidth}{0.3pt}}\vspace{-0.3em}\par}
+
+% basics
+\newcommand{\norm}[1]{\|#1\|}
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\mean}[1]{\overline{#1}}
+\newcommand{\inv}[1]{{#1}^{-1}}
+\newcommand{\transp}[1]{{#1}^\top}
+
+% numbers
+\newcommand{\R}{\mathbb R}				% real numbers
+\newcommand{\N}{\mathbb N}				% natural numbers
+
+
+% symbols used for probabilities and datasets
+\newcommand{\E}{\mathbb E}				% expectation
+\renewcommand{\P}{\mathbf P}		% probability
+\newcommand{\X}{\mathbf X}		% Matrix containing all input vectors
+\newcommand{\x}{\mathbf x}		% input vector
+\newcommand{\z}{\mathbf z}		% input vector
+
+\newcommand{\y}{\mathbf y}		% labels
+\newcommand{\w}{\mathbf w}		% weight vector
+
+
+\newcommand{\K}{\mathcal K}				% kernel function
+\renewcommand{\L}{\mathcal L}			% loss function
+
+% sums
+\newcommand{\sumi}[1]{\sum_{i = 1}^{#1}}
+\newcommand{\sumj}[1]{\sum_{j = 1}^{#1}}
+\newcommand{\sumin}[0]{\sum_{i\leq n}}
+\newcommand{\sumim}[0]{\sum_{i\leq m}}
+
+
+% Ensemble methods
+\newcommand{\bbar}{\mathchar'26\mkern-9mu b}
+
+% Neural Nets
+\newcommand{\weight}[1]{w^{(#1)}}		% weight with power index
+\newcommand{\activation}[1]{a^{(#1)}}	% activation with power index
+\newcommand{\bias}[1]{b^{(#1)}}			% bias with power index
+\newcommand{\nnout}[1]{z^{(#1)}}			% output with power index
+
+
+\newcommand{\ap}[1]{\alpha^{(#1)}}		% activation function with power index
+\newcommand{\Lp}[1]{L^{(#1)}}			% linear functions
+\newcommand{\NN}{\mathit{NN}}			% neural net
+\newcommand{\enc}{\mathit{enc}}			% encoder function (autoencoders)
+
+
+% Bayesian Methods, Distributions
+\newcommand{\Dir}{\mathit{Dir}}			% Dirichlet Distribution
+\newcommand{\Beta}{\mathit{Beta}}		% Beta Distribution
+\newcommand{\DP}{\mathit{DP}}			% Dirichlet process
+\newcommand{\GEM}{\mathit{GEM}}			% GEM distribution
+
+
+% PAC learning
+\newcommand{\RIG}[0]{\hat{\mathcal R}\mathit{IG}}
+
+
+
+
+
+% 
+
+
+% ----------------------- Highlight for important stuff -------------------------
+\NewEnviron{highlight}[1]
+  {\par\medskip\noindent
+  \begin{tikzpicture}
+    \node[inner sep=0pt] (box) {\parbox[t]{.99\textwidth}{%
+    \noindent\fcolorbox{highlight}{highlight}{
+%          \begin{minipage}{.1\columnwidth}
+%          \centering\tikz[scale=1]\node[scale=3,rotate=0]{\faExclamation};
+%          \end{minipage}%
+          \begin{minipage}{\columnwidth}
+          \textbf{\textit{#1}}\par\medskip
+          \BODY
+          \end{minipage}\hfill}%
+      }
+    };
+  \end{tikzpicture}\par\medskip%
+}
+
+% Title
+\title{Advanced Machine Learning \\ 
+			{HS 2020}
+		}
+\author{V\'{e}ronique Kaufmann}
+
+
+\begin{document}	
+\raggedright
+
+\begin{multicols*}{5}
+	\input{chapters/1_Introduction}			
+	\input{chapters/2_Representations} 		
+	\input{chapters/3_Density_Estimation}	
+	\input{chapters/4_Regression}			
+	\input{chapters/5_Gaussian_Processes}	 
+	\input{chapters/6_Linear_Discriminant_Functions}	
+	\input{chapters/7_SVM}		
+	\input{chapters/9_Ensemble_Methods}	
+	\input{chapters/10_Deep_Learning}	
+	\input{chapters/11_Deep_Learning_2}
+	\input{chapters/12_clustering}
+	\input{chapters/12_Non_Parametric_Bayes}
+	\input{chapters/13_PAC_Learning_1}
+\end{multicols*}
+\end{document}

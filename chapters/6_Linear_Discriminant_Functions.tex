@@ -1,0 +1,99 @@
+\section{Classification}
+$\textit{A=}\frac{\textit{\# correct}}{all}$, $\textit{R=}\frac{TP}{TP+FN}$, $\textit{P=}\frac{TP}{TP+FP}$
+\subsection{Discriminative / Generative Models}
+\textbf{Discriminative models:} model decision boundary between classes $p(y|x)$. E.g. HMM, Naive Bayes
+
+\textbf{Generative model:} explicitly model the distribution of each class. $p(x,y)$. E.g. Perc., SVM, trad. NNs.
+
+\subsection{Classifiers}
+\subsubsection{Probabilistic Generative Classifier}
+(1) Assume distribution of labels $p(Y|\theta)$ and $p(X|Y=y)$ , \\
+(2) MLE over joint likelihood 
+	$		
+		P(\X, \y|\theta)
+	$,\\
+(3)  Bayes 
+$		y = \argmax_y p(y|X) \propto p(y)\prod_{i=1}^n p(x_i|y)$
+
+\subsubsection{Prob. Discr. Classifier (2D: log. regr
+) }
+(1) Assume the posterior $P(y{=}1|X) = \sigma(\transp w x + w_0) = \sigma(\transp{\tilde w}x)$. \\
+(2) MLE over likelihood 
+	$
+		p(\y|\X, w)$ $ {=} p(\y {=} 1|\X,w)^y\cdot (1 {-} p(\y {=} 1|\X,w)^{1{-}y}
+	$
+	
+	$\Rightarrow$
+	$
+		L(w) = \log p(\y|\X, \w) $ $
+		 {=} c + \sum_i[y_i\log\sigma(\transp{\w} x_i)$ $+ (1-y_i)\log(1-\sigma(\transp{\w}x_i)]
+	$
+	
+(3) GD/ Newton's over -$L(w)$ . \\
+(4) $w^*$ to predict.
+
+\subsubsection{Discriminative Classifier}
+Choose loss func $\L : \mathcal Y \times \mathcal Y \to \R^+$, Approximate exp. risk with the emp. loss $\hat R$. Optimal classif. $c^* = \argmin_c \hat R$
+
+
+
+
+
+
+% =================================== Discriminant Functions ====================================
+\subsection{Least Squares (LDA, QDA)}
+Make the model predictions as close as possible to a set of target values.
+\textbf{LDA:} Assume $\Sigma_0 = \Sigma_1$\\ $p(y\mid x) = \sigma(\mathbf w^Tx + w_0)$
+
+\textbf{QDA:} General	$p(y\mid x) = \sigma(x^T\mathbf Wx + x^T\mathbf w + w_0)$ 
+
+
+
+\subsection{Fisher's Linear Discriminant}
+Max. distance of means of projected classes to find projective sep. plane.\\
+proj mean: $\mathbf m_k{=}\frac{1}{n_k}\sum_{n\in \mathcal C_k}w^Tx_n{=}w^Tm_k$\\
+Within-class var ($y_k = w^Tx_k$): $s_k^2 = \sum_{n\in \mathcal C_k}\mathbf (y_k - \mathbf m_k)^2$\\
+Dist of proj means: $|w^T(m_1-m_2)|$ \\
+Class proj. cov: $\mathbf s^2_1\text{+}\mathbf s^2_2\text{=}w^T(s^2_1\text{+}s^2_2)w$\sepline
+Fishers Criterion:\\
+$J(w)=\frac{(\mathbf m_1 + \mathbf m_2)^2}{\mathbf s^2_1{+}\mathbf s^2_2} = \frac{\textit{between class var}}{\textit{within class var}}$ $=\frac{w^T(m_1-m_2)(m_1-m_2)^Tw}{w^T(s^2_1{+}s^2_2)w}$
+$ = \frac{w^TS_Bw}{w^TS_ww}$
+
+
+%Fishers Crit for Multiple Classes:\\
+%$J(W)=\frac{|W^TS_BW|}{W^TS_WW}$\\
+%$S_B=\sum_{i=1}^kn_k(\mu_k-\mu)(\mu_k-\mu)^T$\\
+%$S_W=\sum_{i=1}^k\sum_{x\in \mathcal{D}_i}(x-\mu_i)(x-\mu_i)^T$
+
+\subsubsection{Classification with fisher: } $\mathbf w^Tx = \sum_iw[i]x[i]$
+\begin{enumerate}
+	\item Fisher's projection $w^* \propto S_w^{-1}(\mean{x}_0 - \mean{x}_1)$
+	\item Fit mix of gaussians
+	\item Bayes decision theory
+\end{enumerate}
+
+
+% =================================== Perceptron Algorithm ====================================
+\subsection{Perceptron Algorithm}
+	\textbf{Goal:} Compute $w\in\R^d = sgn(w^Tx_i)$
+	
+	\textbf{Cost Function: } $L(\mathbf{w})=\sum_{i\leq n}\mathcal{L}(y_i,c(x_i))
+	=\sum_{i\in\mathcal{M}}-y_i\mathbf{w}^\intercal x_i$
+	
+	$\nabla L(\mathbf{w})$ 
+	$=\sum_{i:y_i\mathbf{w}^\intercal x_i < 0} -y_ix_i$ 
+	
+	$\text{GD with update: }\eta(k)(-y_ix_i)$
+
+\sepline
+
+
+Variable increment perceptron \textbf{converges} if
+	 Train set is lin.sep., 
+	 $\eta(k) \geq 0$, 
+	 $\sum_{k=0}^t\eta(k) \to \infty$ for $t\to\infty$,
+ $\frac{\sum_{k\leq t}\eta^2(k)}{\left(\sum_{k\leq t}\eta(k)\right)^2}\to 0$ for $t\to\infty$
+
+
+
+

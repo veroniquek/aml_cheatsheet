@@ -1,0 +1,41 @@
+\subsection{Variational Autoencoders}
+\textit{Learn meaningful representations without supervision.}
+
+
+\subsubsection{Objective}
+ $\enc_\theta$ mapping measurements in $\mathcal X$ to prob. dists. over space $\mathcal Z$
+$
+	\enc_\theta: x \in \mathcal X \mapsto p_\theta(\cdot| x) \text{ over } \mathcal Z 
+$
+
+%
+%\textbf{Requirements for Autoencoder:}
+%\begin{itemize}
+%	\item Informative: Given representation, it should be easy to guess the measurement
+%	\item Disentangled: Every component in the representation is associated with a distinguished feature
+%	\item Robust: Noisy perturbations in the measurement should not substantially affect the representation and vice versa
+%\end{itemize}
+
+
+
+\textbf{Variational Inference: }find posterior (1) Define prior and calculate likelihood (decoder), (2) approximate posterior (encoder)
+
+Informative, disentangled and robust by the choice of $p_\theta(\cdot | Z)$ and $q_\phi(\cdot | x)$.
+%\subsubsection{Kullback-Leibler Divergence $\mathit{KL}$}
+%Used to measure the closeness of 2 distributions. Usually one of them is the approximation for the other. In our case: $q$ and $p$.
+%$$
+%	\mathit{KL}(q\|p) = \E_q\left[\log\frac{q(Z)}{p(Z|x)} \right]
+%$$
+%\subsubsection{The evidence lower bound $\mathit{elbo}$}
+%\textit{We can't minimize the KL divergence exactly. But we can minimize a function that is equal to it up to a constant: The $\mathit{elbo}$-function}
+%
+%\textbf{The elbo is optimized using}
+%\begin{itemize}
+%	\item Gradient Descent
+%	\item Monte-Carlo Sampling
+%	\item Analytical Reparametrization tricks
+%\end{itemize}
+%
+%
+\subsubsection{Denoising Autoencoder}
+Blank out parts of the input image during training; more robust.
